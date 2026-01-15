@@ -58,7 +58,8 @@ class HytaleDevPlugin : Plugin<Project> {
             argsList.add("--assets=$assetsPath")
 
             if (extension.includesAssetPack.get()) {
-                 argsList.add("--mods=${project.projectDir.absolutePath}")
+                 val srcMain = project.file("src/main")
+                 argsList.add("--mods=${srcMain.absolutePath}")
             }
 
             if (extension.loadUserMods.get()) {
@@ -117,7 +118,12 @@ class HytaleDevPlugin : Plugin<Project> {
             dependsOn(project.tasks.named("build"))
 
             mainClass.set("com.hypixel.hytale.Main")
+            
+            val javaExtension = project.extensions.getByType(org.gradle.api.plugins.JavaPluginExtension::class.java)
+            val mainSourceSet = javaExtension.sourceSets.getByName("main")
+            
             classpath(extension.serverJar)
+            classpath(mainSourceSet.runtimeClasspath)
 
             doFirst {
                if(!extension.serverJar.get().asFile.exists()) {
