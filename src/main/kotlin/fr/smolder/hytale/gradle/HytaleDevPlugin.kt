@@ -12,6 +12,7 @@ import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.register
 import org.gradle.api.GradleException
 import java.io.File
+import org.gradle.process.CommandLineArgumentProvider
 
 interface HytaleExtension {
     val hytalePath: Property<String>
@@ -124,7 +125,10 @@ class HytaleDevPlugin : Plugin<Project> {
                }
             }
 
-            args(extension.serverArgs)
+            argumentProviders.add(CommandLineArgumentProvider {
+                extension.serverArgs.get()
+            })
+            
             workingDir = serverRunDir
             standardInput = System.`in`
         }
