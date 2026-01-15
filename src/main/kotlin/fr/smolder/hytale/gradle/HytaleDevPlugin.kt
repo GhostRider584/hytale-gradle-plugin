@@ -29,6 +29,7 @@ interface HytaleExtension {
     val vineflowerVersion: Property<String>
     val decompileFilter: ListProperty<String>
     val decompilerHeapSize: Property<String>
+    val useAotCache: Property<Boolean>
 }
 
 class HytaleDevPlugin : Plugin<Project> {
@@ -49,6 +50,7 @@ class HytaleDevPlugin : Plugin<Project> {
         extension.vineflowerVersion.convention("1.11.2")
         extension.decompileFilter.convention(listOf("com/hypixel/**"))
         extension.decompilerHeapSize.convention("6G")
+        extension.useAotCache.convention(true)
 
         val resolvedServerJar = project.layout.file(project.provider {
             val home = extension.hytalePath.get()
@@ -61,6 +63,7 @@ class HytaleDevPlugin : Plugin<Project> {
         extension.serverArgs.convention(project.provider {
             val argsList = mutableListOf<String>()
             argsList.add("--allow-op")
+            argsList.add("--disable-sentry")
 
             val home = extension.hytalePath.get()
             val patch = extension.patchLine.get()
@@ -145,6 +148,14 @@ class HytaleDevPlugin : Plugin<Project> {
                }
                minHeapSize = extension.minMemory.get()
                maxHeapSize = extension.maxMemory.get()
+               
+               if (extension.useAotCache.get()) {
+                   val serverJar = extension.serverJar.get().asFile
+                   val aotFile = File(serverJar.parentFile, "HytaleServer.aot")
+                   if (aotFile.exists()) {
+                       jvmArgs("-XX:AOTCache=${aotFile.absolutePath}")
+                   }
+               }
             }
 
             argumentProviders.add(CommandLineArgumentProvider {
