@@ -1,8 +1,28 @@
 # Hytale Gradle Plugin
+![Java](https://img.shields.io/badge/Java-orange?style=for-the-badge&logo=openjdk&logoColor=white)
+![Hytale](https://img.shields.io/badge/Hytale-FF7175?style=for-the-badge&logo=anycubic&logoColor=white)
+![Version](https://img.shields.io/badge/version-0.0.1-248cd6?labelColor=&style=for-the-badge)
+![License: MIT](https://img.shields.io/badge/License-MIT-7267db.svg?style=for-the-badge)
+
 A Gradle plugin to streamline Hytale server development.
 
 ## Usage
-### Applying the Plugin
+
+### 1. Configure Plugin Repository
+Since this plugin is hosted on the Smolder repository, you must tell Gradle where to find it.
+Add this to your `settings.gradle.kts` file:
+
+```kotlin
+pluginManagement {
+    repositories {
+        maven("https://repo.smolder.fr/public/")
+        gradlePluginPortal()
+    }
+}
+```
+
+### 2. Apply the Plugin
+In your `build.gradle.kts`:
 
 ```kotlin
 plugins {
@@ -19,7 +39,7 @@ hytale {
     hytalePath.set("C:/Users/You/AppData/Roaming/Hytale")
 
     // Optional: patch line (defaults to "live")
-    patchLine.set("1.2.3")
+    patchLine.set("live")
 
     // Optional: game version (defaults to "latest")
     gameVersion.set("latest")
