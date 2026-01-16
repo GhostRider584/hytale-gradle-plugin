@@ -1,7 +1,7 @@
 # Hytale Gradle Plugin
 ![Java](https://img.shields.io/badge/Java-orange?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Hytale](https://img.shields.io/badge/Hytale-FF7175?style=for-the-badge&logo=anycubic&logoColor=white)
-![Version](https://img.shields.io/badge/version-0.0.3-248cd6?labelColor=&style=for-the-badge)
+![Version](https://img.shields.io/badge/version-0.0.4-248cd6?labelColor=&style=for-the-badge)
 ![License: MIT](https://img.shields.io/badge/License-MIT-7267db.svg?style=for-the-badge)
 
 A Gradle plugin to streamline Hytale plugin development.
@@ -26,7 +26,7 @@ In your `build.gradle.kts`:
 
 ```kotlin
 plugins {
-    id("fr.smolder.hytale.dev") version "0.0.3"
+    id("fr.smolder.hytale.dev") version "0.0.4"
 }
 ```
 
@@ -61,6 +61,9 @@ hytale {
     vineflowerVersion.set("1.11.2")
     decompileFilter.set(listOf("com/hypixel/**"))
     decompilerHeapSize.set("6G")
+    
+    // Automatically attach decompiled sources to IDE (defaults to true)
+    includeDecompiledSources.set(true)
 }
 ```
 

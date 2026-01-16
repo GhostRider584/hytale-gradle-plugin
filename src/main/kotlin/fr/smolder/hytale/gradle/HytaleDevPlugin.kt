@@ -29,6 +29,7 @@ interface HytaleExtension {
     val decompileFilter: ListProperty<String>
     val decompilerHeapSize: Property<String>
     val useAotCache: Property<Boolean>
+    val includeDecompiledSources: Property<Boolean>
 }
 
 class HytaleDevPlugin : Plugin<Project> {
@@ -59,6 +60,7 @@ class HytaleDevPlugin : Plugin<Project> {
         extension.decompileFilter.convention(listOf("com/hypixel/**"))
         extension.decompilerHeapSize.convention("6G")
         extension.useAotCache.convention(true)
+        extension.includeDecompiledSources.convention(true)
 
         val resolvedServerJar = project.layout.file(project.provider {
             val home = extension.hytalePath.get()
@@ -100,10 +102,14 @@ class HytaleDevPlugin : Plugin<Project> {
         configureDecompileTask(project, extension, decompiler)
         configureRunTask(project, extension)
 
-        project.pluginManager.withPlugin("java") {
-            val javaExtension = project.extensions.getByType(org.gradle.api.plugins.JavaPluginExtension::class.java)
-            val decompiledSourcesDir = project.layout.buildDirectory.dir("decompile/sources")
-            javaExtension.sourceSets.getByName("main").java.srcDir(decompiledSourcesDir)
+        project.afterEvaluate {
+            project.pluginManager.withPlugin("java") {
+                if (extension.includeDecompiledSources.get()) {
+                    val javaExtension = project.extensions.getByType(org.gradle.api.plugins.JavaPluginExtension::class.java)
+                    val decompiledSourcesDir = project.layout.buildDirectory.dir("decompile/sources")
+                    javaExtension.sourceSets.getByName("main").java.srcDir(decompiledSourcesDir)
+                }
+            }
         }
     }
 
