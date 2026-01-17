@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "fr.smolder.hytale"
-version = "0.0.6"
+version = "0.0.7"
 
 repositories {
     mavenCentral()
