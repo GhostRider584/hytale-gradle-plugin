@@ -171,8 +171,8 @@ class HytaleDevPlugin : Plugin<Project> {
             inputs.property("version", project.provider { extension.manifest.version })
             inputs.property("description", project.provider { extension.manifest.description })
             inputs.property("serverVersion", project.provider { extension.manifest.serverVersion })
-            inputs.property("website", project.provider { extension.manifest.website })
-            inputs.property("main", project.provider { extension.manifest.main })
+            inputs.property("website", project.provider { extension.manifest.website }).optional(true)
+            inputs.property("main", project.provider { extension.manifest.main }).optional(true)
             inputs.property("includesAssetPack", project.provider { extension.manifest.includesAssetPack })
             inputs.property("disabledByDefault", project.provider { extension.manifest.disabledByDefault })
             
