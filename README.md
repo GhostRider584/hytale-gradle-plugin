@@ -1,7 +1,7 @@
 # Hytale Gradle Plugin
 ![Java](https://img.shields.io/badge/Java-orange?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Hytale](https://img.shields.io/badge/Hytale-FF7175?style=for-the-badge&logo=anycubic&logoColor=white)
-![Version](https://img.shields.io/badge/version-0.0.9-248cd6?labelColor=&style=for-the-badge)
+![Version](https://img.shields.io/badge/version-0.0.10-248cd6?labelColor=&style=for-the-badge)
 ![License: MIT](https://img.shields.io/badge/License-MIT-7267db.svg?style=for-the-badge)
 
 A Gradle plugin to streamline Hytale plugin development.
@@ -28,7 +28,7 @@ In your `build.gradle.kts`:
 
 ```kotlin
 plugins {
-    id("fr.smolder.hytale.dev") version "0.0.9"
+    id("fr.smolder.hytale.dev") version "0.0.10"
 }
 ```
 
@@ -83,6 +83,7 @@ hytale {
 - `./gradlew build`: Builds the project and updates/generates the `manifest.json`.
 - `./gradlew generateManifest`: Generates `manifest.json` from the DSL configuration.
 - `./gradlew decompileServer`: Decompiles the Hytale Server JAR and creates a `-sources.jar`.
+  > ⚠️ You may see `Unable to simplify switch on enum` errors, these are harmless Vineflower warnings and should be ignored.
 - `./gradlew saveAuth`: Saves your current `run/auth.enc` to the global cache (`~/.gradle/hytale/auth.enc`).
 
 ## Manifest DSL

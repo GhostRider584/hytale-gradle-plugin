@@ -62,6 +62,9 @@ abstract class HytaleExtension @Inject constructor(
     
     /** Heap size for the decompiler */
     abstract val decompilerHeapSize: Property<String>
+
+    /** Logging level for the decompiler */
+    abstract val decompilerLogLevel: Property<String>
     
     /** Whether to use AOT cache for the server */
     abstract val useAotCache: Property<Boolean>
@@ -118,6 +121,7 @@ class HytaleDevPlugin : Plugin<Project> {
         extension.vineflowerVersion.convention("1.11.2")
         extension.decompileFilter.convention(listOf("com/hypixel/**"))
         extension.decompilerHeapSize.convention("6G")
+        extension.decompilerLogLevel.convention("INFO")
         extension.useAotCache.convention(true)
         extension.includeDecompiledSources.convention(true)
 
@@ -341,7 +345,7 @@ class HytaleDevPlugin : Plugin<Project> {
 
                 val classesDir = tempClassesDir.get().asFile
                 val outputDir = decompiledOutputDir.get().asFile
-                
+
                 project.delete(classesDir)
                 project.delete(outputDir)
                 project.mkdir(classesDir)
@@ -359,7 +363,44 @@ class HytaleDevPlugin : Plugin<Project> {
                 println("Starting decompilation...")
 
                 args = listOf(
-                    "-dgs=1", "-rsy=1", "-rbr=1", "-lit=1", "-jvn=1", "-log=ERROR",
+                    "--ignore-invalid-bytecode=1",
+                    "--verify-anonymous-classes=1",
+                    "--decompile-switch-expressions=1",
+                    "--pattern-matching=1",
+                    "--decompile-preview=1",
+                    "--decompile-generics=1",
+                    "--explicit-generics=0",
+                    "--undefined-as-object=1",
+                    "--remove-synthetic=1",
+                    "--remove-bridge=1",
+                    "--remove-empty-try-catch=1",
+                    "--remove-getclass=1",
+                    "--hide-default-constructor=1",
+                    "--hide-empty-super=1",
+                    "--decompile-assert=1",
+                    "--decompiler-comments=1",
+                    "--dump-bytecode-on-error=1",
+                    "--dump-exception-on-error=1",
+                    "--keep-literals=1",
+                    "--use-lvt-names=1",
+                    "--use-method-parameters=1",
+                    "--variable-renaming=jad",
+                    "--indent-string=    ",
+                    "--inline-simple-lambdas=1",
+                    "--include-classpath=1",
+                    "--include-runtime=current",
+                    "--decompile-inner=1",
+                    "--validate-inner-classes-names=1",
+                    "--incorporate-returns=1",
+                    "--simplify-stack=1",
+                    "--ternary-in-if=1",
+                    "--try-loop-fix=1",
+                    "--override-annotation=1",
+
+                    "--thread-count=${Runtime.getRuntime().availableProcessors()}",
+                    "--log-level=${extension.decompilerLogLevel.get()}",
+                    "--add-external=${serverJar.absolutePath}",
+
                     classesDir.absolutePath,
                     outputDir.absolutePath
                 )
