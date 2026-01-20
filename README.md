@@ -32,6 +32,15 @@ plugins {
 }
 ```
 
+### 3. Project Repositories
+Ensure your project has `mavenCentral()` in its repositories (required for the Vineflower decompiler):
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+```
+
 ### Configuration
 Configure the plugin using the `hytale` block:
 
@@ -115,20 +124,20 @@ hytale {
 
 ### Manifest Fields
 
-| Field                  | Type       | Description                                | Required |
-| ---------------------- | ---------- | ------------------------------------------ | -------- |
-| `group`                | String     | Your organization or group name            | Yes      |
-| `name`                 | String     | The name of your Pack                      | Yes      |
-| `version`              | String     | Version number (semantic versioning)       | Yes      |
-| `description`          | String     | A brief description of what your Pack does | Yes      |
-| `authors`              | Author[]   | Array of author information                | Yes      |
-| `website`              | String     | Your website or project page               | No       |
-| `serverVersion`        | String     | Compatible server version (`*` for all)    | Yes      |
-| `dependencies`         | Map        | Packs required for this to work            | No       |
-| `optionalDependencies` | Map        | Packs that enhance but aren't required     | No       |
-| `disabledByDefault`    | Boolean    | Whether Pack loads automatically           | No       |
-| `main`                 | String     | Main plugin class (plugin-specific)        | No       |
-| `includesAssetPack`    | Boolean    | Whether this pack includes assets          | No       |
+| Field                  | Type     | Description                                | Required |
+|------------------------|----------|--------------------------------------------|----------|
+| `group`                | String   | Your organization or group name            | Yes      |
+| `name`                 | String   | The name of your Pack                      | Yes      |
+| `version`              | String   | Version number (semantic versioning)       | Yes      |
+| `description`          | String   | A brief description of what your Pack does | Yes      |
+| `authors`              | Author[] | Array of author information                | Yes      |
+| `website`              | String   | Your website or project page               | No       |
+| `serverVersion`        | String   | Compatible server version (`*` for all)    | Yes      |
+| `dependencies`         | Map      | Packs required for this to work            | No       |
+| `optionalDependencies` | Map      | Packs that enhance but aren't required     | No       |
+| `disabledByDefault`    | Boolean  | Whether Pack loads automatically           | No       |
+| `main`                 | String   | Main plugin class (plugin-specific)        | No       |
+| `includesAssetPack`    | Boolean  | Whether this pack includes assets          | No       |
 
 ## Authentication
 
