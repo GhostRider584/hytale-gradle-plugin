@@ -72,6 +72,9 @@ abstract class HytaleExtension @Inject constructor(
     /** Whether to include decompiled sources in the IDE */
     abstract val includeDecompiledSources: Property<Boolean>
 
+    /** Whether to pass --accept-early-plugins argument to the server */
+    abstract val acceptEarlyPlugins: Property<Boolean>
+
     // Manifest DSL support
     private var manifestDsl: ManifestDsl? = null
     
@@ -124,6 +127,7 @@ class HytaleDevPlugin : Plugin<Project> {
         extension.decompilerLogLevel.convention("INFO")
         extension.useAotCache.convention(true)
         extension.includeDecompiledSources.convention(true)
+        extension.acceptEarlyPlugins.convention(false)
 
         val resolvedServerJar = project.layout.file(project.provider {
             val home = extension.hytalePath.get()
@@ -339,6 +343,10 @@ class HytaleDevPlugin : Plugin<Project> {
 
                 if (extension.loadUserMods.get()) {
                     argsList.add("--mods=$home/UserData/Mods")
+                }
+
+                if (extension.acceptEarlyPlugins.get()) {
+                    argsList.add("--accept-early-plugins")
                 }
 
                 argsList.addAll(extension.serverArgs.get())

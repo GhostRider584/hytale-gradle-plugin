@@ -69,6 +69,9 @@ hytale {
     // Use AOT cache for faster startup (defaults to true)
     useAotCache.set(true)
 
+    // Accept early plugins (defaults to false)
+    acceptEarlyPlugins.set(true)
+
     // You can add extra server arguments
     serverArgs.add("--your-custom-arg")
     
